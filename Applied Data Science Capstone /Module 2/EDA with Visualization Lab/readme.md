@@ -1,4 +1,4 @@
-# Hands-on Lab: [EDA with Visualization Lab]
+# Hands-on Lab: [EDA with Visualization]
 
 ## Project Overview
 
