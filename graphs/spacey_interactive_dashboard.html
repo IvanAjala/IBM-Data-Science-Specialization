@@ -1,0 +1,1061 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>🚀 SpaceY - Dashboard Interativo</title>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                padding: 20px;
+            }
+            
+            .dashboard-container {
+                max-width: 1400px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+                color: white;
+                padding: 30px;
+                text-align: center;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+            
+            .header p {
+                font-size: 1.2em;
+                opacity: 0.9;
+            }
+            
+            .controls-panel {
+                background: #f8f9fa;
+                padding: 25px;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .filters-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .filter-group {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .filter-group label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #2c3e50;
+            }
+            
+            .filter-group select, .filter-group input {
+                width: 100%;
+                padding: 12px;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: border-color 0.3s;
+            }
+            
+            .filter-group select:focus, .filter-group input:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+            
+            .kpi-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .kpi-card {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border-left: 4px solid #3498db;
+            }
+            
+            .kpi-value {
+                font-size: 2em;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 5px;
+            }
+            
+            .kpi-label {
+                color: #7f8c8d;
+                font-size: 0.9em;
+            }
+            
+            .charts-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 25px;
+            }
+            
+            .chart-container {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .chart-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #2c3e50;
+                text-align: center;
+            }
+            
+            .chart {
+                height: 400px;
+            }
+            
+            .full-width {
+                grid-column: 1 / -1;
+            }
+            
+            .btn-apply {
+                background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: transform 0.2s;
+                display: block;
+                margin: 0 auto;
+            }
+            
+            .btn-apply:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+            }
+            
+            @media (max-width: 768px) {
+                .charts-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .filters-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dashboard-container">
+            <!-- Header -->
+            <div class="header">
+                <h1>🚀 SpaceY Launch Analytics</h1>
+                <p>Dashboard Interativo para Análise Estratégica de Lançamentos</p>
+            </div>
+            
+            <!-- Painel de Controles -->
+            <div class="controls-panel">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>📍 Site de Lançamento</label>
+                        <select id="site-select">
+                            <option value="ALL">ALL</option><option value="CCAFS LC-40">CCAFS LC-40</option><option value="CCAFS SLC-40">CCAFS SLC-40</option><option value="KSC LC-39A">KSC LC-39A</option><option value="VAFB SLC-4E">VAFB SLC-4E</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>🚀 Versão do Booster</label>
+                        <select id="booster-select">
+                            <option value="ALL">ALL</option><option value="B4">B4</option><option value="B5">B5</option><option value="FT">FT</option><option value="v1.0">v1.0</option><option value="v1.1">v1.1</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>⚖️ Faixa de Payload (kg)</label>
+                        <input type="range" id="payload-slider" min="0" max="10000" step="1000" 
+                               value="10000" oninput="updatePayloadValue(this.value)">
+                        <div id="payload-value" style="text-align: center; margin-top: 10px; font-weight: bold;">
+                            Até 10000 kg
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-apply" onclick="updateDashboard()">
+                    🔄 Aplicar Filtros
+                </button>
+            </div>
+            
+            <!-- KPIs -->
+            <div class="controls-panel">
+                <div class="kpi-cards">
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-total">0</div>
+                        <div class="kpi-label">Total de Lançamentos</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-success">0%</div>
+                        <div class="kpi-label">Taxa de Sucesso</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-payload">0kg</div>
+                        <div class="kpi-label">Payload Médio</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-best-site">-</div>
+                        <div class="kpi-label">Melhor Site</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráficos -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">📊 Distribuição de Sucesso</div>
+                    <div id="pie-chart" class="chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">🚀 Performance por Booster</div>
+                    <div id="booster-chart" class="chart"></div>
+                </div>
+                
+                <div class="chart-container full-width">
+                    <div class="chart-title">⚖️ Payload vs Sucesso do Lançamento</div>
+                    <div id="scatter-chart" class="chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">📈 Sucesso por Faixa de Payload</div>
+                    <div id="payload-range-chart" class="chart"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">🎯 Comparação entre Sites</div>
+                    <div id="sites-comparison-chart" class="chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Dados do dashboard
+            const dashboardData = {
+                "all_data": [
+  {
+    "Unnamed: 0":0,
+    "Flight Number":1,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":0.0,
+    "Booster Version":"F9 v1.0  B0003",
+    "Booster Version Category":"v1.0"
+  },
+  {
+    "Unnamed: 0":1,
+    "Flight Number":2,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":0.0,
+    "Booster Version":"F9 v1.0  B0004",
+    "Booster Version Category":"v1.0"
+  },
+  {
+    "Unnamed: 0":2,
+    "Flight Number":3,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":525.0,
+    "Booster Version":"F9 v1.0  B0005",
+    "Booster Version Category":"v1.0"
+  },
+  {
+    "Unnamed: 0":3,
+    "Flight Number":4,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":500.0,
+    "Booster Version":"F9 v1.0  B0006",
+    "Booster Version Category":"v1.0"
+  },
+  {
+    "Unnamed: 0":4,
+    "Flight Number":5,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":677.0,
+    "Booster Version":"F9 v1.0  B0007",
+    "Booster Version Category":"v1.0"
+  },
+  {
+    "Unnamed: 0":5,
+    "Flight Number":7,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":3170.0,
+    "Booster Version":"F9 v1.1",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":6,
+    "Flight Number":8,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":3325.0,
+    "Booster Version":"F9 v1.1",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":7,
+    "Flight Number":9,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":2296.0,
+    "Booster Version":"F9 v1.1",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":8,
+    "Flight Number":10,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":1316.0,
+    "Booster Version":"F9 v1.1",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":9,
+    "Flight Number":11,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":4535.0,
+    "Booster Version":"F9 v1.1",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":10,
+    "Flight Number":12,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":4428.0,
+    "Booster Version":"F9 v1.1 B1011",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":11,
+    "Flight Number":13,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":2216.0,
+    "Booster Version":"F9 v1.1 B1010",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":12,
+    "Flight Number":14,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":2395.0,
+    "Booster Version":"F9 v1.1 B1012",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":13,
+    "Flight Number":15,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":570.0,
+    "Booster Version":"F9 v1.1 B1013",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":14,
+    "Flight Number":16,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":4159.0,
+    "Booster Version":"F9 v1.1 B1014",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":15,
+    "Flight Number":17,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":1898.0,
+    "Booster Version":"F9 v1.1 B1015",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":16,
+    "Flight Number":18,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":4707.0,
+    "Booster Version":"F9 v1.1 B1016",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":17,
+    "Flight Number":19,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":1952.0,
+    "Booster Version":"F9 v1.1 B1018",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":18,
+    "Flight Number":20,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":2034.0,
+    "Booster Version":"F9 FT B1019",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":19,
+    "Flight Number":22,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":5271.0,
+    "Booster Version":"F9 FT B1020",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":20,
+    "Flight Number":23,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":3136.0,
+    "Booster Version":"F9 FT B1021.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":21,
+    "Flight Number":24,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":4696.0,
+    "Booster Version":"F9 FT B1022",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":22,
+    "Flight Number":25,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":3100.0,
+    "Booster Version":"F9 FT B1023.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":23,
+    "Flight Number":26,
+    "Launch Site":"CCAFS LC-40",
+    "class":0,
+    "Payload Mass (kg)":3600.0,
+    "Booster Version":"F9 FT B1024",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":24,
+    "Flight Number":27,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":2257.0,
+    "Booster Version":"F9 FT B1025.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":25,
+    "Flight Number":28,
+    "Launch Site":"CCAFS LC-40",
+    "class":1,
+    "Payload Mass (kg)":4600.0,
+    "Booster Version":"F9 FT B1026",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":26,
+    "Flight Number":6,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":500.0,
+    "Booster Version":"F9 v1.1  B1003",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":27,
+    "Flight Number":21,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":553.0,
+    "Booster Version":"F9 v1.1 B1017",
+    "Booster Version Category":"v1.1"
+  },
+  {
+    "Unnamed: 0":28,
+    "Flight Number":29,
+    "Launch Site":"VAFB SLC-4E",
+    "class":1,
+    "Payload Mass (kg)":9600.0,
+    "Booster Version":"F9 FT B1029.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":29,
+    "Flight Number":37,
+    "Launch Site":"VAFB SLC-4E",
+    "class":1,
+    "Payload Mass (kg)":9600.0,
+    "Booster Version":"F9 FT B1036.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":30,
+    "Flight Number":40,
+    "Launch Site":"VAFB SLC-4E",
+    "class":1,
+    "Payload Mass (kg)":475.0,
+    "Booster Version":"F9 FT B1038.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":31,
+    "Flight Number":42,
+    "Launch Site":"VAFB SLC-4E",
+    "class":1,
+    "Payload Mass (kg)":9600.0,
+    "Booster Version":"F9 B4 B1041.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":32,
+    "Flight Number":46,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":9600.0,
+    "Booster Version":"F9 FT  B1036.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":33,
+    "Flight Number":49,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":2150.0,
+    "Booster Version":"F9 FT  B1038.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":34,
+    "Flight Number":51,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":9600.0,
+    "Booster Version":"F9 B4  B1041.2",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":35,
+    "Flight Number":55,
+    "Launch Site":"VAFB SLC-4E",
+    "class":0,
+    "Payload Mass (kg)":6460.0,
+    "Booster Version":"F9 B4  B1043.2",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":36,
+    "Flight Number":30,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":2490.0,
+    "Booster Version":"F9 FT B1031.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":37,
+    "Flight Number":31,
+    "Launch Site":"KSC LC-39A",
+    "class":0,
+    "Payload Mass (kg)":5600.0,
+    "Booster Version":"F9 FT B1030",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":38,
+    "Flight Number":32,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":5300.0,
+    "Booster Version":"F9 FT  B1021.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":39,
+    "Flight Number":33,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":3696.65,
+    "Booster Version":"F9 FT B1032.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":40,
+    "Flight Number":34,
+    "Launch Site":"KSC LC-39A",
+    "class":0,
+    "Payload Mass (kg)":6070.0,
+    "Booster Version":"F9 FT B1034",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":41,
+    "Flight Number":35,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":2708.0,
+    "Booster Version":"F9 FT B1035.1",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":42,
+    "Flight Number":36,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":3669.0,
+    "Booster Version":"F9 FT  B1029.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":43,
+    "Flight Number":38,
+    "Launch Site":"KSC LC-39A",
+    "class":0,
+    "Payload Mass (kg)":6761.0,
+    "Booster Version":"F9 FT B1037",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":44,
+    "Flight Number":39,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":3310.0,
+    "Booster Version":"F9 B4 B1039.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":45,
+    "Flight Number":41,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":4990.0,
+    "Booster Version":"F9 B4 B1040.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":46,
+    "Flight Number":43,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":5200.0,
+    "Booster Version":"F9 FT  B1031.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":47,
+    "Flight Number":44,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":3500.0,
+    "Booster Version":"F9 B4 B1042.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":48,
+    "Flight Number":54,
+    "Launch Site":"KSC LC-39A",
+    "class":1,
+    "Payload Mass (kg)":3600.0,
+    "Booster Version":"F9 B5  B1046.1",
+    "Booster Version Category":"B5"
+  },
+  {
+    "Unnamed: 0":49,
+    "Flight Number":45,
+    "Launch Site":"CCAFS SLC-40",
+    "class":1,
+    "Payload Mass (kg)":2205.0,
+    "Booster Version":"F9 FT  B1035.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":50,
+    "Flight Number":47,
+    "Launch Site":"CCAFS SLC-40",
+    "class":1,
+    "Payload Mass (kg)":3696.65,
+    "Booster Version":"F9 B4 B1043.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":51,
+    "Flight Number":48,
+    "Launch Site":"CCAFS SLC-40",
+    "class":0,
+    "Payload Mass (kg)":4230.0,
+    "Booster Version":"F9 FT  B1032.2",
+    "Booster Version Category":"FT"
+  },
+  {
+    "Unnamed: 0":52,
+    "Flight Number":50,
+    "Launch Site":"CCAFS SLC-40",
+    "class":0,
+    "Payload Mass (kg)":6092.0,
+    "Booster Version":"F9 B4 B1044",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":53,
+    "Flight Number":52,
+    "Launch Site":"CCAFS SLC-40",
+    "class":0,
+    "Payload Mass (kg)":2647.0,
+    "Booster Version":"F9 B4  B1039.2",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":54,
+    "Flight Number":53,
+    "Launch Site":"CCAFS SLC-40",
+    "class":1,
+    "Payload Mass (kg)":362.0,
+    "Booster Version":"F9 B4 B1045.1",
+    "Booster Version Category":"B4"
+  },
+  {
+    "Unnamed: 0":55,
+    "Flight Number":56,
+    "Launch Site":"CCAFS SLC-40",
+    "class":0,
+    "Payload Mass (kg)":5384.0,
+    "Booster Version":"F9 B4  B1040.2",
+    "Booster Version Category":"B4"
+  }
+],
+                "launch_sites": ["ALL", "CCAFS LC-40", "CCAFS SLC-40", "KSC LC-39A", "VAFB SLC-4E"],
+                "booster_versions": ["ALL", "B4", "B5", "FT", "v1.0", "v1.1"]
+            };
+            
+            // Função para atualizar valor do slider
+            function updatePayloadValue(value) {
+                document.getElementById('payload-value').textContent = 'Até ' + value + ' kg';
+            }
+            
+            // Função principal para atualizar o dashboard
+            function updateDashboard() {
+                const selectedSite = document.getElementById('site-select').value;
+                const selectedBooster = document.getElementById('booster-select').value;
+                const maxPayload = document.getElementById('payload-slider').value;
+                
+                // Filtrar dados
+                let filteredData = dashboardData.all_data;
+                
+                if (selectedSite !== 'ALL') {
+                    filteredData = filteredData.filter(item => item['Launch Site'] === selectedSite);
+                }
+                
+                if (selectedBooster !== 'ALL') {
+                    filteredData = filteredData.filter(item => item['Booster Version Category'] === selectedBooster);
+                }
+                
+                filteredData = filteredData.filter(item => item['Payload Mass (kg)'] <= parseFloat(maxPayload));
+                
+                // Atualizar KPIs
+                updateKPIs(filteredData);
+                
+                // Atualizar gráficos
+                updatePieChart(filteredData, selectedSite);
+                updateBoosterChart(filteredData);
+                updateScatterChart(filteredData);
+                updatePayloadRangeChart(filteredData);
+                updateSitesComparisonChart(filteredData);
+            }
+            
+            // Função para atualizar KPIs
+            function updateKPIs(data) {
+                const total = data.length;
+                const successRate = total > 0 ? (data.filter(item => item.class === 1).length / total * 100).toFixed(1) : 0;
+                const avgPayload = total > 0 ? (data.reduce((sum, item) => sum + item['Payload Mass (kg)'], 0) / total).toFixed(0) : 0;
+                
+                // Encontrar melhor site
+                const siteSuccess = {};
+                data.forEach(item => {
+                    const site = item['Launch Site'];
+                    if (!siteSuccess[site]) siteSuccess[site] = {success: 0, total: 0};
+                    siteSuccess[site].total++;
+                    if (item.class === 1) siteSuccess[site].success++;
+                });
+                
+                let bestSite = '-';
+                let bestRate = 0;
+                for (const [site, stats] of Object.entries(siteSuccess)) {
+                    const rate = (stats.success / stats.total) * 100;
+                    if (rate > bestRate) {
+                        bestRate = rate;
+                        bestSite = site;
+                    }
+                }
+                
+                document.getElementById('kpi-total').textContent = total;
+                document.getElementById('kpi-success').textContent = successRate + '%';
+                document.getElementById('kpi-payload').textContent = avgPayload + 'kg';
+                document.getElementById('kpi-best-site').textContent = bestSite;
+            }
+            
+            // Função para atualizar gráfico de pizza
+            function updatePieChart(data, selectedSite) {
+                let plotData;
+                let title;
+                
+                if (selectedSite === 'ALL') {
+                    const siteSuccess = {};
+                    data.forEach(item => {
+                        const site = item['Launch Site'];
+                        if (!siteSuccess[site]) siteSuccess[site] = 0;
+                        if (item.class === 1) siteSuccess[site]++;
+                    });
+                    
+                    const sites = Object.keys(siteSuccess);
+                    const successes = Object.values(siteSuccess);
+                    
+                    plotData = [{
+                        values: successes,
+                        labels: sites,
+                        type: 'pie',
+                        hole: 0.4,
+                        marker: {
+                            colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+                        }
+                    }];
+                    title = 'Sucesso por Site de Lançamento';
+                } else {
+                    const successCount = data.filter(item => item.class === 1).length;
+                    const failureCount = data.filter(item => item.class === 0).length;
+                    
+                    plotData = [{
+                        values: [successCount, failureCount],
+                        labels: ['Sucesso ✅', 'Falha ❌'],
+                        type: 'pie',
+                        hole: 0.4,
+                        marker: {
+                            colors: ['#2ecc71', '#e74c3c']
+                        }
+                    }];
+                    title = 'Sucesso vs Falha - ' + selectedSite;
+                }
+                
+                const layout = {
+                    title: title,
+                    showlegend: true,
+                    height: 400
+                };
+                
+                Plotly.newPlot('pie-chart', plotData, layout);
+            }
+            
+            // Função para atualizar gráfico de boosters
+            function updateBoosterChart(data) {
+                const boosterSuccess = {};
+                data.forEach(item => {
+                    const booster = item['Booster Version Category'];
+                    if (!boosterSuccess[booster]) boosterSuccess[booster] = {success: 0, total: 0};
+                    boosterSuccess[booster].total++;
+                    if (item.class === 1) boosterSuccess[booster].success++;
+                });
+                
+                const boosters = Object.keys(boosterSuccess);
+                const successRates = boosters.map(booster => 
+                    (boosterSuccess[booster].success / boosterSuccess[booster].total * 100).toFixed(1)
+                );
+                const counts = boosters.map(booster => boosterSuccess[booster].total);
+                
+                const plotData = [{
+                    x: boosters,
+                    y: successRates,
+                    type: 'bar',
+                    marker: {
+                        color: successRates,
+                        colorscale: 'Viridis'
+                    },
+                    text: counts.map(count => 'n=' + count),
+                    textposition: 'auto'
+                }];
+                
+                const layout = {
+                    title: 'Taxa de Sucesso por Versão do Booster',
+                    xaxis: {title: 'Versão do Booster'},
+                    yaxis: {title: 'Taxa de Sucesso (%)'},
+                    height: 400
+                };
+                
+                Plotly.newPlot('booster-chart', plotData, layout);
+            }
+            
+            // Função para atualizar gráfico de dispersão
+            function updateScatterChart(data) {
+                const successData = data.filter(item => item.class === 1);
+                const failureData = data.filter(item => item.class === 0);
+                
+                const plotData = [
+                    {
+                        x: successData.map(item => item['Payload Mass (kg)']),
+                        y: successData.map(item => 'Sucesso'),
+                        mode: 'markers',
+                        marker: {
+                            size: 12,
+                            color: '#2ecc71',
+                            symbol: 'circle'
+                        },
+                        name: 'Sucesso ✅',
+                        text: successData.map(item => 'Site: ' + item['Launch Site'] + '<br>Booster: ' + item['Booster Version Category'])
+                    },
+                    {
+                        x: failureData.map(item => item['Payload Mass (kg)']),
+                        y: failureData.map(item => 'Falha'),
+                        mode: 'markers',
+                        marker: {
+                            size: 12,
+                            color: '#e74c3c',
+                            symbol: 'x'
+                        },
+                        name: 'Falha ❌',
+                        text: failureData.map(item => 'Site: ' + item['Launch Site'] + '<br>Booster: ' + item['Booster Version Category'])
+                    }
+                ]};
+                
+                const layout = {
+                    title: 'Relação: Payload vs Resultado do Lançamento',
+                    xaxis: {title: 'Payload Mass (kg)'},
+                    yaxis: {title: 'Resultado'},
+                    height: 400,
+                    showlegend: true
+                };
+                
+                Plotly.newPlot('scatter-chart', plotData, layout);
+            }
+            
+            // Função para atualizar gráfico de faixas de payload
+            function updatePayloadRangeChart(data) {
+                const ranges = [
+                    {min: 0, max: 2500, label: '0-2500kg'},
+                    {min: 2501, max: 5000, label: '2501-5000kg'},
+                    {min: 5001, max: 7500, label: '5001-7500kg'},
+                    {min: 7501, max: 10000, label: '7501-10000kg'}
+                ];
+                
+                const successRates = ranges.map(range => {
+                    const rangeData = data.filter(item => 
+                        item['Payload Mass (kg)'] >= range.min && 
+                        item['Payload Mass (kg)'] <= range.max
+                    );
+                    const total = rangeData.length;
+                    const success = rangeData.filter(item => item.class === 1).length;
+                    return total > 0 ? (success / total * 100).toFixed(1) : 0;
+                });
+                
+                const plotData = [{
+                    x: ranges.map(range => range.label),
+                    y: successRates,
+                    type: 'bar',
+                    marker: {
+                        color: successRates,
+                        colorscale: 'RdYlGn'
+                    }
+                }];
+                
+                const layout = {
+                    title: 'Taxa de Sucesso por Faixa de Payload',
+                    xaxis: {title: 'Faixa de Payload'},
+                    yaxis: {title: 'Taxa de Sucesso (%)'},
+                    height: 400
+                };
+                
+                Plotly.newPlot('payload-range-chart', plotData, layout);
+            }
+            
+            // Função para atualizar comparação entre sites
+            function updateSitesComparisonChart(data) {
+                const siteStats = {};
+                data.forEach(item => {
+                    const site = item['Launch Site'];
+                    if (!siteStats[site]) siteStats[site] = {success: 0, total: 0};
+                    siteStats[site].total++;
+                    if (item.class === 1) siteStats[site].success++;
+                });
+                
+                const sites = Object.keys(siteStats);
+                const successRates = sites.map(site => 
+                    (siteStats[site].success / siteStats[site].total * 100).toFixed(1)
+                );
+                
+                const plotData = [{
+                    x: sites,
+                    y: successRates,
+                    type: 'bar',
+                    marker: {
+                        color: successRates,
+                        colorscale: 'Portland'
+                    }
+                }];
+                
+                const layout = {
+                    title: 'Comparação de Performance entre Sites',
+                    xaxis: {title: 'Site de Lançamento'},
+                    yaxis: {title: 'Taxa de Sucesso (%)'},
+                    height: 400
+                };
+                
+                Plotly.newPlot('sites-comparison-chart', plotData, layout);
+            }
+            
+            // Inicializar dashboard
+            document.addEventListener('DOMContentLoaded', function() {
+                updateDashboard();
+            });
+        </script>
+    </body>
+    </html>
+    

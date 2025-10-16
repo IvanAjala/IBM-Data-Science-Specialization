@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9e9581d92397beba2f0c693476b3c034 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; 
+            top: 10px; left: 50px; width: 200px; height: 130px; 
+            background-color: white; border:2px solid grey; z-index:9999; 
+            font-size:12px; padding: 10px">
+    <h4 style="margin-top:0">Legenda</h4>
+    <p><i class="fa fa-rocket" style="color:green"></i> Alto Sucesso (>75%)</p>
+    <p><i class="fa fa-rocket" style="color:orange"></i> Médio Sucesso (40-75%)</p>
+    <p><i class="fa fa-rocket" style="color:red"></i> Baixo Sucesso (<40%)</p>
+    <p><i class="fa fa-home" style="color:blue"></i> Cidade Próxima</p>
+</div>
+    
+            <div class="folium-map" id="map_9e9581d92397beba2f0c693476b3c034" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_9e9581d92397beba2f0c693476b3c034 = L.map(
+                "map_9e9581d92397beba2f0c693476b3c034",
+                {
+                    center: [32.0, -100.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a8025a9e1b52db4243eef422d85f7b28 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a8025a9e1b52db4243eef422d85f7b28.addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var marker_0c8514127fb2d5e9636e7fbc621a1c95 = L.marker(
+                [28.573255, -80.646895],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_43bbe0763460bd6fad45608161ca0995 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_885c20c7208182097581339d3fe8a5c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_316e339958705a304bf0767379e50a76 = $(`<div id="html_316e339958705a304bf0767379e50a76" style="width: 100.0%; height: 100.0%;">     <div style="width: 250px;">         <h4 style="color: green; margin: 0;">KSC LC-39A</h4>         <hr style="margin: 5px 0;">         <p style="margin: 2px 0;"><b>Taxa de Sucesso:</b> 76.9%</p>         <p style="margin: 2px 0;"><b>Lançamentos:</b> 10/13 bem-sucedidos</p>         <p style="margin: 2px 0;"><b>Distância da costa:</b> 0.36 km</p>         <p style="margin: 2px 0;"><b>Cidade mais próxima:</b> 25 km (Titusville)</p>         <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                      height: 10px; border-radius: 5px; margin: 5px 0;">             <div style="width: 76.9%; height: 100%;                         background: rgba(255,255,255,0.3); border-radius: 5px;"></div>         </div>     </div>     </div>`)[0];
+                popup_885c20c7208182097581339d3fe8a5c1.setContent(html_316e339958705a304bf0767379e50a76);
+            
+        
+
+        marker_0c8514127fb2d5e9636e7fbc621a1c95.bindPopup(popup_885c20c7208182097581339d3fe8a5c1)
+        ;
+
+        
+    
+    
+            marker_0c8514127fb2d5e9636e7fbc621a1c95.bindTooltip(
+                `<div>
+                     KSC LC-39A - 76.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0c8514127fb2d5e9636e7fbc621a1c95.setIcon(icon_43bbe0763460bd6fad45608161ca0995);
+            
+    
+            var marker_175f8e57deb0f1785e4cc9f7c9e60c24 = L.marker(
+                [28.563197, -80.57682],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_d059f278094980a24d10dba2be3985b8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6ad1fc287874e587b0cb2c5d83c94f44 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4c2ab243579a2f8ccd8b5ad909f7d2aa = $(`<div id="html_4c2ab243579a2f8ccd8b5ad909f7d2aa" style="width: 100.0%; height: 100.0%;">     <div style="width: 250px;">         <h4 style="color: orange; margin: 0;">CCAFS SLC-40</h4>         <hr style="margin: 5px 0;">         <p style="margin: 2px 0;"><b>Taxa de Sucesso:</b> 42.9%</p>         <p style="margin: 2px 0;"><b>Lançamentos:</b> 3/7 bem-sucedidos</p>         <p style="margin: 2px 0;"><b>Distância da costa:</b> 0.51 km</p>         <p style="margin: 2px 0;"><b>Cidade mais próxima:</b> 25 km (Titusville)</p>         <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                      height: 10px; border-radius: 5px; margin: 5px 0;">             <div style="width: 42.9%; height: 100%;                         background: rgba(255,255,255,0.3); border-radius: 5px;"></div>         </div>     </div>     </div>`)[0];
+                popup_6ad1fc287874e587b0cb2c5d83c94f44.setContent(html_4c2ab243579a2f8ccd8b5ad909f7d2aa);
+            
+        
+
+        marker_175f8e57deb0f1785e4cc9f7c9e60c24.bindPopup(popup_6ad1fc287874e587b0cb2c5d83c94f44)
+        ;
+
+        
+    
+    
+            marker_175f8e57deb0f1785e4cc9f7c9e60c24.bindTooltip(
+                `<div>
+                     CCAFS SLC-40 - 42.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_175f8e57deb0f1785e4cc9f7c9e60c24.setIcon(icon_d059f278094980a24d10dba2be3985b8);
+            
+    
+            var marker_ebd8936609887d6f30b5e2857edc5184 = L.marker(
+                [34.632834, -120.610745],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_676920ee8f13828ccccbe2babe739aed = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_977001fb868ffb62980c855e2c47de67 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_15f2401fa0df1574b22ff15f3b94e10d = $(`<div id="html_15f2401fa0df1574b22ff15f3b94e10d" style="width: 100.0%; height: 100.0%;">     <div style="width: 250px;">         <h4 style="color: red; margin: 0;">VAFB SLC-4E</h4>         <hr style="margin: 5px 0;">         <p style="margin: 2px 0;"><b>Taxa de Sucesso:</b> 28.5%</p>         <p style="margin: 2px 0;"><b>Lançamentos:</b> 2/7 bem-sucedidos</p>         <p style="margin: 2px 0;"><b>Distância da costa:</b> 1.35 km</p>         <p style="margin: 2px 0;"><b>Cidade mais próxima:</b> 15 km (Lompoc)</p>         <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                      height: 10px; border-radius: 5px; margin: 5px 0;">             <div style="width: 28.5%; height: 100%;                         background: rgba(255,255,255,0.3); border-radius: 5px;"></div>         </div>     </div>     </div>`)[0];
+                popup_977001fb868ffb62980c855e2c47de67.setContent(html_15f2401fa0df1574b22ff15f3b94e10d);
+            
+        
+
+        marker_ebd8936609887d6f30b5e2857edc5184.bindPopup(popup_977001fb868ffb62980c855e2c47de67)
+        ;
+
+        
+    
+    
+            marker_ebd8936609887d6f30b5e2857edc5184.bindTooltip(
+                `<div>
+                     VAFB SLC-4E - 28.5% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ebd8936609887d6f30b5e2857edc5184.setIcon(icon_676920ee8f13828ccccbe2babe739aed);
+            
+    
+            var marker_8541899acf16bb7a361600d4905736f9 = L.marker(
+                [28.562302, -80.577356],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_09e49e7342a0416e5853fe62cc176f29 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_dd718abed5b672a147ba2df47b61fc24 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f829a1a9456f84c0ce1d2286b017c84d = $(`<div id="html_f829a1a9456f84c0ce1d2286b017c84d" style="width: 100.0%; height: 100.0%;">     <div style="width: 250px;">         <h4 style="color: red; margin: 0;">CCAFS LC-40</h4>         <hr style="margin: 5px 0;">         <p style="margin: 2px 0;"><b>Taxa de Sucesso:</b> 28.0%</p>         <p style="margin: 2px 0;"><b>Lançamentos:</b> 7/25 bem-sucedidos</p>         <p style="margin: 2px 0;"><b>Distância da costa:</b> 0.58 km</p>         <p style="margin: 2px 0;"><b>Cidade mais próxima:</b> 25 km (Titusville)</p>         <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                      height: 10px; border-radius: 5px; margin: 5px 0;">             <div style="width: 28.0%; height: 100%;                         background: rgba(255,255,255,0.3); border-radius: 5px;"></div>         </div>     </div>     </div>`)[0];
+                popup_dd718abed5b672a147ba2df47b61fc24.setContent(html_f829a1a9456f84c0ce1d2286b017c84d);
+            
+        
+
+        marker_8541899acf16bb7a361600d4905736f9.bindPopup(popup_dd718abed5b672a147ba2df47b61fc24)
+        ;
+
+        
+    
+    
+            marker_8541899acf16bb7a361600d4905736f9.bindTooltip(
+                `<div>
+                     CCAFS LC-40 - 28.0% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8541899acf16bb7a361600d4905736f9.setIcon(icon_09e49e7342a0416e5853fe62cc176f29);
+            
+    
+            var marker_47d00259b0de4c6a625bb74edd60120f = L.marker(
+                [28.6122, -80.8076],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_bc36901100ab6a98e871880f3c6d5a15 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_94f643bb9c2cc7e73acbccbaa61d7ddf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ded86a67eead99a3ce27a698fdb31dca = $(`<div id="html_ded86a67eead99a3ce27a698fdb31dca" style="width: 100.0%; height: 100.0%;"><b>Titusville, FL</b></div>`)[0];
+                popup_94f643bb9c2cc7e73acbccbaa61d7ddf.setContent(html_ded86a67eead99a3ce27a698fdb31dca);
+            
+        
+
+        marker_47d00259b0de4c6a625bb74edd60120f.bindPopup(popup_94f643bb9c2cc7e73acbccbaa61d7ddf)
+        ;
+
+        
+    
+    
+            marker_47d00259b0de4c6a625bb74edd60120f.bindTooltip(
+                `<div>
+                     Titusville, FL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_47d00259b0de4c6a625bb74edd60120f.setIcon(icon_bc36901100ab6a98e871880f3c6d5a15);
+            
+    
+            var marker_a4ad6773775300083d696bd4bb044645 = L.marker(
+                [34.6391, -120.4579],
+                {
+}
+            ).addTo(map_9e9581d92397beba2f0c693476b3c034);
+        
+    
+            var icon_cbaef4e58c0ca738bde4548b9c10581f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e9ccd2736cef17ee0be594cd325b6976 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_662ae90762c23b2b2e08afb53ef06608 = $(`<div id="html_662ae90762c23b2b2e08afb53ef06608" style="width: 100.0%; height: 100.0%;"><b>Lompoc, CA</b></div>`)[0];
+                popup_e9ccd2736cef17ee0be594cd325b6976.setContent(html_662ae90762c23b2b2e08afb53ef06608);
+            
+        
+
+        marker_a4ad6773775300083d696bd4bb044645.bindPopup(popup_e9ccd2736cef17ee0be594cd325b6976)
+        ;
+
+        
+    
+    
+            marker_a4ad6773775300083d696bd4bb044645.bindTooltip(
+                `<div>
+                     Lompoc, CA
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a4ad6773775300083d696bd4bb044645.setIcon(icon_cbaef4e58c0ca738bde4548b9c10581f);
+            
+</script>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a445d22f19bc83f0e659acd5a9417988 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+             <h3 align="center" style="font-size:20px"><b>Mapa de Desempenho - Sites de Lançamento SpaceX</b></h3>
+             
+    
+            <div class="folium-map" id="map_a445d22f19bc83f0e659acd5a9417988" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a445d22f19bc83f0e659acd5a9417988 = L.map(
+                "map_a445d22f19bc83f0e659acd5a9417988",
+                {
+                    center: [32.0, -100.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7878d5baaabad3b3e9a234714ec4414e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7878d5baaabad3b3e9a234714ec4414e.addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var marker_a3616bfbc54c1adaa4f7bc3c5d0a26e8 = L.marker(
+                [28.573255, -80.646895],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_30fed249d89be376c7fa08e6860c2b88 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cd73b3809d34c5e6f81b4761663aa76d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5de96428dfeb5232242f9154be817345 = $(`<div id="html_5de96428dfeb5232242f9154be817345" style="width: 100.0%; height: 100.0%;">     <b>KSC LC-39A</b><br>     Taxa de Sucesso: <b>76.9%</b><br>     Coordenadas: 28.573255, -80.646895<br>     <span style='color:green; font-weight:bold;'>     ★ Performance ★     </span>     </div>`)[0];
+                popup_cd73b3809d34c5e6f81b4761663aa76d.setContent(html_5de96428dfeb5232242f9154be817345);
+            
+        
+
+        marker_a3616bfbc54c1adaa4f7bc3c5d0a26e8.bindPopup(popup_cd73b3809d34c5e6f81b4761663aa76d)
+        ;
+
+        
+    
+    
+            marker_a3616bfbc54c1adaa4f7bc3c5d0a26e8.bindTooltip(
+                `<div>
+                     KSC LC-39A - 76.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a3616bfbc54c1adaa4f7bc3c5d0a26e8.setIcon(icon_30fed249d89be376c7fa08e6860c2b88);
+            
+    
+            var marker_3aee8eb8c6a7654c4d170661fbf26d8e = L.marker(
+                [28.563197, -80.57682],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_b034e6f9961b20d497488b6d2d0b7451 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "yellow",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d70af2e6abd2ccfb017e24861a896b20 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e3bf5ac4beafb1f24d059693cb0048ab = $(`<div id="html_e3bf5ac4beafb1f24d059693cb0048ab" style="width: 100.0%; height: 100.0%;">     <b>CCAFS SLC-40</b><br>     Taxa de Sucesso: <b>42.9%</b><br>     Coordenadas: 28.563197, -80.57682<br>     <span style='color:yellow; font-weight:bold;'>     ★★ Performance ★★     </span>     </div>`)[0];
+                popup_d70af2e6abd2ccfb017e24861a896b20.setContent(html_e3bf5ac4beafb1f24d059693cb0048ab);
+            
+        
+
+        marker_3aee8eb8c6a7654c4d170661fbf26d8e.bindPopup(popup_d70af2e6abd2ccfb017e24861a896b20)
+        ;
+
+        
+    
+    
+            marker_3aee8eb8c6a7654c4d170661fbf26d8e.bindTooltip(
+                `<div>
+                     CCAFS SLC-40 - 42.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3aee8eb8c6a7654c4d170661fbf26d8e.setIcon(icon_b034e6f9961b20d497488b6d2d0b7451);
+            
+    
+            var marker_9ea2b4c576c4463fd968374f7db87022 = L.marker(
+                [34.632834, -120.610745],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_028e10b975468804daf213d8f85dcb9d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5447ef14261770c7a77c8dcd49ef3947 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_03b620b7e9efeb2e6e4e3238fcdd31b7 = $(`<div id="html_03b620b7e9efeb2e6e4e3238fcdd31b7" style="width: 100.0%; height: 100.0%;">     <b>VAFB SLC-4E</b><br>     Taxa de Sucesso: <b>28.5%</b><br>     Coordenadas: 34.632834, -120.610745<br>     <span style='color:orange; font-weight:bold;'>     ★★★ Performance ★★★     </span>     </div>`)[0];
+                popup_5447ef14261770c7a77c8dcd49ef3947.setContent(html_03b620b7e9efeb2e6e4e3238fcdd31b7);
+            
+        
+
+        marker_9ea2b4c576c4463fd968374f7db87022.bindPopup(popup_5447ef14261770c7a77c8dcd49ef3947)
+        ;
+
+        
+    
+    
+            marker_9ea2b4c576c4463fd968374f7db87022.bindTooltip(
+                `<div>
+                     VAFB SLC-4E - 28.5% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9ea2b4c576c4463fd968374f7db87022.setIcon(icon_028e10b975468804daf213d8f85dcb9d);
+            
+    
+            var marker_8cdff0e00d52a7d4db4b51a4b49267f2 = L.marker(
+                [28.562302, -80.577356],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_7bab60661ef3477e19abc294b9754220 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a1755986aa0b2d692efee42b02fb3c8b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8e0f808c2e8f081fed074d6aa055d143 = $(`<div id="html_8e0f808c2e8f081fed074d6aa055d143" style="width: 100.0%; height: 100.0%;">     <b>CCAFS LC-40</b><br>     Taxa de Sucesso: <b>28.0%</b><br>     Coordenadas: 28.562302, -80.577356<br>     <span style='color:red; font-weight:bold;'>     ★★★★ Performance ★★★★     </span>     </div>`)[0];
+                popup_a1755986aa0b2d692efee42b02fb3c8b.setContent(html_8e0f808c2e8f081fed074d6aa055d143);
+            
+        
+
+        marker_8cdff0e00d52a7d4db4b51a4b49267f2.bindPopup(popup_a1755986aa0b2d692efee42b02fb3c8b)
+        ;
+
+        
+    
+    
+            marker_8cdff0e00d52a7d4db4b51a4b49267f2.bindTooltip(
+                `<div>
+                     CCAFS LC-40 - 28.0% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8cdff0e00d52a7d4db4b51a4b49267f2.setIcon(icon_7bab60661ef3477e19abc294b9754220);
+            
+    
+            var marker_8874093b94256c19af3169c59d2aa4f3 = L.marker(
+                [28.6122, -80.8076],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_c5e7cee4401a38aed04cd1ae85586a23 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e74e9fe4d0154a5580187e1b2654e18f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0060accb650f5c4b9024422a36b8d291 = $(`<div id="html_0060accb650f5c4b9024422a36b8d291" style="width: 100.0%; height: 100.0%;"><b>Titusville</b></div>`)[0];
+                popup_e74e9fe4d0154a5580187e1b2654e18f.setContent(html_0060accb650f5c4b9024422a36b8d291);
+            
+        
+
+        marker_8874093b94256c19af3169c59d2aa4f3.bindPopup(popup_e74e9fe4d0154a5580187e1b2654e18f)
+        ;
+
+        
+    
+    
+            marker_8874093b94256c19af3169c59d2aa4f3.bindTooltip(
+                `<div>
+                     Titusville
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8874093b94256c19af3169c59d2aa4f3.setIcon(icon_c5e7cee4401a38aed04cd1ae85586a23);
+            
+    
+            var marker_e4e36d24eeeb163c69467f475d100a6b = L.marker(
+                [34.6391, -120.4579],
+                {
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            var icon_1dd0e209e550d8c23cf86263d131a28e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cd3fd83e859e00f300cee6ba0bdca65d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9b935f388c2e90979f60a03419ecbcf0 = $(`<div id="html_9b935f388c2e90979f60a03419ecbcf0" style="width: 100.0%; height: 100.0%;"><b>Lompoc</b></div>`)[0];
+                popup_cd3fd83e859e00f300cee6ba0bdca65d.setContent(html_9b935f388c2e90979f60a03419ecbcf0);
+            
+        
+
+        marker_e4e36d24eeeb163c69467f475d100a6b.bindPopup(popup_cd3fd83e859e00f300cee6ba0bdca65d)
+        ;
+
+        
+    
+    
+            marker_e4e36d24eeeb163c69467f475d100a6b.bindTooltip(
+                `<div>
+                     Lompoc
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e4e36d24eeeb163c69467f475d100a6b.setIcon(icon_1dd0e209e550d8c23cf86263d131a28e);
+            
+    
+            var poly_line_3009bbf3704916563a3e661444385404 = L.polyline(
+                [[28.573255, -80.646895], [28.573255, -80.64]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_3009bbf3704916563a3e661444385404.bindTooltip(
+                `<div>
+                     KSC LC-39A - Direção para costa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_20d0c75705e1b28cca8707ad16773286 = L.polyline(
+                [[28.563197, -80.57682], [28.563197, -80.57]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_20d0c75705e1b28cca8707ad16773286.bindTooltip(
+                `<div>
+                     CCAFS SLC-40 - Direção para costa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_02d8552044b8bfe2ad078a499c2d6532 = L.polyline(
+                [[28.562302, -80.577356], [28.562302, -80.57]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_02d8552044b8bfe2ad078a499c2d6532.bindTooltip(
+                `<div>
+                     CCAFS LC-40 - Direção para costa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_abf9aab177726e2800eb89a65cdb9a4b = L.polyline(
+                [[34.632834, -120.610745], [34.632834, -120.59]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_abf9aab177726e2800eb89a65cdb9a4b.bindTooltip(
+                `<div>
+                     VAFB SLC-4E - Direção para costa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a9c258550f8390970bffcc4648616f2c = L.polyline(
+                [[28.573255, -80.646895], [28.6122, -80.8076]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_a9c258550f8390970bffcc4648616f2c.bindTooltip(
+                `<div>
+                     KSC LC-39A - Conexão com cidade
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2b3b3a9afd3a9870519ead12c86c0415 = L.polyline(
+                [[28.563197, -80.57682], [28.6122, -80.8076]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_2b3b3a9afd3a9870519ead12c86c0415.bindTooltip(
+                `<div>
+                     CCAFS SLC-40 - Conexão com cidade
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4dcf2fea4a380532e44fc8a1342cea33 = L.polyline(
+                [[28.562302, -80.577356], [28.6122, -80.8076]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_4dcf2fea4a380532e44fc8a1342cea33.bindTooltip(
+                `<div>
+                     CCAFS LC-40 - Conexão com cidade
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_534f984f897365c0b75b6a7a9da60ac5 = L.polyline(
+                [[34.632834, -120.610745], [34.6391, -120.4579]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.5, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+        
+    
+            poly_line_534f984f897365c0b75b6a7a9da60ac5.bindTooltip(
+                `<div>
+                     VAFB SLC-4E - Conexão com cidade
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var layer_control_ccd921277fabde823610013d363f9ba5_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_7878d5baaabad3b3e9a234714ec4414e,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_ccd921277fabde823610013d363f9ba5 = L.control.layers(
+                layer_control_ccd921277fabde823610013d363f9ba5_layers.base_layers,
+                layer_control_ccd921277fabde823610013d363f9ba5_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_a445d22f19bc83f0e659acd5a9417988);
+
+        
+</script>
+</html>

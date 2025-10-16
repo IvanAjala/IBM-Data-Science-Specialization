@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6079df0ab9fc0864e3e1176367d9f16d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; 
+            top: 10px; left: 50px; width: 280px; height: 210px; 
+            background-color: white; border: 3px solid #2c3e50; z-index:9999; 
+            font-size: 12px; padding: 15px; border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    <h4 style="margin-top:0; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px;">
+        🗺️ Legenda - Sites de Lançamento
+    </h4>
+    <p style="margin: 8px 0;">
+        <span style="color: green; font-size: 16px;">■</span> 
+        <b>Alto Sucesso</b> (>75%) - KSC LC-39A
+    </p>
+    <p style="margin: 8px 0;">
+        <span style="color: orange; font-size: 16px;">■</span> 
+        <b>Médio Sucesso</b> (40-75%) - CCAFS SLC-40
+    </p>
+    <p style="margin: 8px 0;">
+        <span style="color: red; font-size: 16px;">■</span> 
+        <b>Baixo Sucesso</b> (<40%) - VAFB & CCAFS LC-40
+    </p>
+    <p style="margin: 8px 0;">
+        <span style="color: blue; font-size: 16px;">🏠</span> 
+        <b>Cidade Próxima</b> (15-25km)
+    </p>
+    <div style="margin-top: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;">
+        <p style="margin: 3px 0; font-size: 11px; color: #e74c3c;">
+            <b>🌎 Vantagem Equatorial:</b> Todos entre 28-35°N
+        </p>
+        <p style="margin: 3px 0; font-size: 11px; color: #27ae60;">
+            <b>🚀 + Velocidade Rotacional:</b> ~1670 km/h no Equador
+        </p>
+    </div>
+</div>
+    
+<div style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%); 
+            background: rgba(255,255,255,0.9); padding: 10px 20px; 
+            border: 2px solid #3498db; border-radius: 10px; z-index: 9999;
+            text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    <h3 style="margin: 0; color: #2c3e50;">🚀 Análise Geoestratégica - Sites de Lançamento SpaceX</h3>
+    <p style="margin: 5px 0 0 0; font-size: 14px; color: #7f8c8d;">
+        <b>Latitude Estratégica:</b> 28-35°N | <b>Vantagem Rotacional:</b> +465 m/s no Equador
+    </p>
+</div>
+    
+<div style="position: fixed; bottom: 50px; right: 50px; width: 300px; 
+            background: rgba(255,248,225,0.95); padding: 15px; 
+            border: 2px solid #e67e22; border-radius: 10px; z-index: 9999;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    <h4 style="margin-top: 0; color: #d35400;">🌍 Vantagem da Rotação Terrestre</h4>
+    <p style="margin: 8px 0; font-size: 12px;">
+        <b>Velocidade no Equador (0°):</b> ~1670 km/h<br>
+        <b>Velocidade em 28°N (Flórida):</b> ~1470 km/h<br>
+        <b>Velocidade em 34°N (Califórnia):</b> ~1380 km/h
+    </p>
+    <p style="margin: 8px 0; font-size: 11px; color: #27ae60;">
+        ✅ <b>Economia de combustível:</b> +290 km/h vs Califórnia<br>
+        ✅ <b>Impulso natural:</b> Direção Leste → Órbita
+    </p>
+</div>
+    
+            <div class="folium-map" id="map_6079df0ab9fc0864e3e1176367d9f16d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6079df0ab9fc0864e3e1176367d9f16d = L.map(
+                "map_6079df0ab9fc0864e3e1176367d9f16d",
+                {
+                    center: [32.0, -100.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_56eb2d7834fec0c5c30e4c665e7ede63 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_56eb2d7834fec0c5c30e4c665e7ede63.addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var marker_cdefde475ee17a9c4646eb4539af8020 = L.marker(
+                [28.573255, -80.646895],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_980d3ec8d7b1bca79ba206ed67f9f3ba = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_395a5dc84c2b6a30929a8ada81616186 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8310321a51e6624fa835ce484ce0b488 = $(`<div id="html_8310321a51e6624fa835ce484ce0b488" style="width: 100.0%; height: 100.0%;">     <div style="width: 280px;">         <h4 style="color: green; margin: 0; border-bottom: 2px solid green; padding-bottom: 5px;">             🚀 KSC LC-39A         </h4>         <div style="margin: 10px 0;">             <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                          height: 15px; border-radius: 8px; margin: 5px 0; position: relative;">                 <div style="width: 76.9%; height: 100%;                             background: rgba(255,255,255,0.4); border-radius: 8px;"></div>                 <div style="position: absolute; top: -20px; left: 76.9%;                             transform: translateX(-50%); font-weight: bold; color: green;">                     76.9%                 </div>             </div>         </div>         <p style="margin: 5px 0;"><b>📍 Lançamentos:</b> 10/13 bem-sucedidos</p>         <p style="margin: 5px 0;"><b>🌊 Distância da costa:</b> 0.36 km</p>         <p style="margin: 5px 0;"><b>🏙️ Cidade mais próxima:</b> 25 km (Titusville)</p>         <p style="margin: 5px 0;"><b>🌎 Latitude:</b> 28.57°N</p>     </div>     </div>`)[0];
+                popup_395a5dc84c2b6a30929a8ada81616186.setContent(html_8310321a51e6624fa835ce484ce0b488);
+            
+        
+
+        marker_cdefde475ee17a9c4646eb4539af8020.bindPopup(popup_395a5dc84c2b6a30929a8ada81616186)
+        ;
+
+        
+    
+    
+            marker_cdefde475ee17a9c4646eb4539af8020.bindTooltip(
+                `<div>
+                     🚀 KSC LC-39A - 76.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cdefde475ee17a9c4646eb4539af8020.setIcon(icon_980d3ec8d7b1bca79ba206ed67f9f3ba);
+            
+    
+            var marker_47403d4806ef314b20505271593333ee = L.marker(
+                [28.563197, -80.57682],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_b31053f114caf8f10070b7a055607d1d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b0aea8dac77488a7169a3e46d6c41f9a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_55991e05678d9a5884dea6a1c42cc6ef = $(`<div id="html_55991e05678d9a5884dea6a1c42cc6ef" style="width: 100.0%; height: 100.0%;">     <div style="width: 280px;">         <h4 style="color: orange; margin: 0; border-bottom: 2px solid orange; padding-bottom: 5px;">             🚀 CCAFS SLC-40         </h4>         <div style="margin: 10px 0;">             <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                          height: 15px; border-radius: 8px; margin: 5px 0; position: relative;">                 <div style="width: 42.9%; height: 100%;                             background: rgba(255,255,255,0.4); border-radius: 8px;"></div>                 <div style="position: absolute; top: -20px; left: 42.9%;                             transform: translateX(-50%); font-weight: bold; color: orange;">                     42.9%                 </div>             </div>         </div>         <p style="margin: 5px 0;"><b>📍 Lançamentos:</b> 3/7 bem-sucedidos</p>         <p style="margin: 5px 0;"><b>🌊 Distância da costa:</b> 0.51 km</p>         <p style="margin: 5px 0;"><b>🏙️ Cidade mais próxima:</b> 25 km (Titusville)</p>         <p style="margin: 5px 0;"><b>🌎 Latitude:</b> 28.56°N</p>     </div>     </div>`)[0];
+                popup_b0aea8dac77488a7169a3e46d6c41f9a.setContent(html_55991e05678d9a5884dea6a1c42cc6ef);
+            
+        
+
+        marker_47403d4806ef314b20505271593333ee.bindPopup(popup_b0aea8dac77488a7169a3e46d6c41f9a)
+        ;
+
+        
+    
+    
+            marker_47403d4806ef314b20505271593333ee.bindTooltip(
+                `<div>
+                     🚀 CCAFS SLC-40 - 42.9% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_47403d4806ef314b20505271593333ee.setIcon(icon_b31053f114caf8f10070b7a055607d1d);
+            
+    
+            var marker_9572b3fb5cfdd9f1b3e361e5042f4e9d = L.marker(
+                [34.632834, -120.610745],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_6d9d156eb6d738254413b9303ce46176 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_69048481494cd3fa5e133239349e863a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_570a878ba135a68513fedd41ff9bf4c5 = $(`<div id="html_570a878ba135a68513fedd41ff9bf4c5" style="width: 100.0%; height: 100.0%;">     <div style="width: 280px;">         <h4 style="color: red; margin: 0; border-bottom: 2px solid red; padding-bottom: 5px;">             🚀 VAFB SLC-4E         </h4>         <div style="margin: 10px 0;">             <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                          height: 15px; border-radius: 8px; margin: 5px 0; position: relative;">                 <div style="width: 28.5%; height: 100%;                             background: rgba(255,255,255,0.4); border-radius: 8px;"></div>                 <div style="position: absolute; top: -20px; left: 28.5%;                             transform: translateX(-50%); font-weight: bold; color: red;">                     28.5%                 </div>             </div>         </div>         <p style="margin: 5px 0;"><b>📍 Lançamentos:</b> 2/7 bem-sucedidos</p>         <p style="margin: 5px 0;"><b>🌊 Distância da costa:</b> 1.35 km</p>         <p style="margin: 5px 0;"><b>🏙️ Cidade mais próxima:</b> 15 km (Lompoc)</p>         <p style="margin: 5px 0;"><b>🌎 Latitude:</b> 34.63°N</p>     </div>     </div>`)[0];
+                popup_69048481494cd3fa5e133239349e863a.setContent(html_570a878ba135a68513fedd41ff9bf4c5);
+            
+        
+
+        marker_9572b3fb5cfdd9f1b3e361e5042f4e9d.bindPopup(popup_69048481494cd3fa5e133239349e863a)
+        ;
+
+        
+    
+    
+            marker_9572b3fb5cfdd9f1b3e361e5042f4e9d.bindTooltip(
+                `<div>
+                     🚀 VAFB SLC-4E - 28.5% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9572b3fb5cfdd9f1b3e361e5042f4e9d.setIcon(icon_6d9d156eb6d738254413b9303ce46176);
+            
+    
+            var marker_13d7ff6e50650fb8ef5e844970cdb872 = L.marker(
+                [28.562302, -80.577356],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_595733ca238ec56f574fb68e4cc2617a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "rocket",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b311aa3460f7761df821bbb0861095cd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f16e2bf05d3201f9cdeedb5d92bdfad = $(`<div id="html_9f16e2bf05d3201f9cdeedb5d92bdfad" style="width: 100.0%; height: 100.0%;">     <div style="width: 280px;">         <h4 style="color: red; margin: 0; border-bottom: 2px solid red; padding-bottom: 5px;">             🚀 CCAFS LC-40         </h4>         <div style="margin: 10px 0;">             <div style="background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);                          height: 15px; border-radius: 8px; margin: 5px 0; position: relative;">                 <div style="width: 28.0%; height: 100%;                             background: rgba(255,255,255,0.4); border-radius: 8px;"></div>                 <div style="position: absolute; top: -20px; left: 28.0%;                             transform: translateX(-50%); font-weight: bold; color: red;">                     28.0%                 </div>             </div>         </div>         <p style="margin: 5px 0;"><b>📍 Lançamentos:</b> 7/25 bem-sucedidos</p>         <p style="margin: 5px 0;"><b>🌊 Distância da costa:</b> 0.58 km</p>         <p style="margin: 5px 0;"><b>🏙️ Cidade mais próxima:</b> 25 km (Titusville)</p>         <p style="margin: 5px 0;"><b>🌎 Latitude:</b> 28.56°N</p>     </div>     </div>`)[0];
+                popup_b311aa3460f7761df821bbb0861095cd.setContent(html_9f16e2bf05d3201f9cdeedb5d92bdfad);
+            
+        
+
+        marker_13d7ff6e50650fb8ef5e844970cdb872.bindPopup(popup_b311aa3460f7761df821bbb0861095cd)
+        ;
+
+        
+    
+    
+            marker_13d7ff6e50650fb8ef5e844970cdb872.bindTooltip(
+                `<div>
+                     🚀 CCAFS LC-40 - 28.0% Sucesso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_13d7ff6e50650fb8ef5e844970cdb872.setIcon(icon_595733ca238ec56f574fb68e4cc2617a);
+            
+    
+            var marker_6982664cf12d3b4c41d1ca5ff11beb00 = L.marker(
+                [28.6122, -80.8076],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_de2f7fff90211ce113d85a5c3d602876 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_58a6a86e327a1df58c2d5ec6bee37fb9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a20bff33fd4e2a39642de0226cc9720a = $(`<div id="html_a20bff33fd4e2a39642de0226cc9720a" style="width: 100.0%; height: 100.0%;"><b>🏙️ Titusville, FL</b><br>Distância do site mais próximo: 25 km</div>`)[0];
+                popup_58a6a86e327a1df58c2d5ec6bee37fb9.setContent(html_a20bff33fd4e2a39642de0226cc9720a);
+            
+        
+
+        marker_6982664cf12d3b4c41d1ca5ff11beb00.bindPopup(popup_58a6a86e327a1df58c2d5ec6bee37fb9)
+        ;
+
+        
+    
+    
+            marker_6982664cf12d3b4c41d1ca5ff11beb00.bindTooltip(
+                `<div>
+                     Titusville, FL
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6982664cf12d3b4c41d1ca5ff11beb00.setIcon(icon_de2f7fff90211ce113d85a5c3d602876);
+            
+    
+            var marker_2ab78f237088894d33b0e4a6bb8e49ee = L.marker(
+                [34.6391, -120.4579],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var icon_5b9bb19449756bb965d4dad66ca09adf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_df97c16ec00b429595bdcfbf4946fef0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1638e6848a5a414ddd4faa169271612a = $(`<div id="html_1638e6848a5a414ddd4faa169271612a" style="width: 100.0%; height: 100.0%;"><b>🏙️ Lompoc, CA</b><br>Distância do site mais próximo: 15 km</div>`)[0];
+                popup_df97c16ec00b429595bdcfbf4946fef0.setContent(html_1638e6848a5a414ddd4faa169271612a);
+            
+        
+
+        marker_2ab78f237088894d33b0e4a6bb8e49ee.bindPopup(popup_df97c16ec00b429595bdcfbf4946fef0)
+        ;
+
+        
+    
+    
+            marker_2ab78f237088894d33b0e4a6bb8e49ee.bindTooltip(
+                `<div>
+                     Lompoc, CA
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2ab78f237088894d33b0e4a6bb8e49ee.setIcon(icon_5b9bb19449756bb965d4dad66ca09adf);
+            
+    
+            var poly_line_4e0e7c0abbf05fb6acce13e439a71b6b = L.polyline(
+                [[0.0, -180.0], [0.0, -60.0]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+        var popup_46596c4a95699833bedef9f7a11ee534 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c36e8812976d513121640a55ed9dfa99 = $(`<div id="html_c36e8812976d513121640a55ed9dfa99" style="width: 100.0%; height: 100.0%;"><b>LINHA DO EQUADOR</b><br>Velocidade rotacional: ~1670 km/h</div>`)[0];
+                popup_46596c4a95699833bedef9f7a11ee534.setContent(html_c36e8812976d513121640a55ed9dfa99);
+            
+        
+
+        poly_line_4e0e7c0abbf05fb6acce13e439a71b6b.bindPopup(popup_46596c4a95699833bedef9f7a11ee534)
+        ;
+
+        
+    
+    
+            poly_line_4e0e7c0abbf05fb6acce13e439a71b6b.bindTooltip(
+                `<div>
+                     Linha do Equador - 0° Latitude
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f81232cc054d08be3896d37dad3c91b9 = L.marker(
+                [15.0, -90.0],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var div_icon_5ad7a7198cda06aaafa1cbed17f100d4 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; \n                       border: 1px solid #ccc; font-weight: bold; color: #d35400;\"\u003e\n                Rota\u00e7\u00e3o da Terra \u2192\n            \u003c/div\u003e\n            ",
+  "iconSize": [150, 40],
+  "iconAnchor": [75, 20],
+  "className": "empty",
+});
+        
+    
+                marker_f81232cc054d08be3896d37dad3c91b9.setIcon(div_icon_5ad7a7198cda06aaafa1cbed17f100d4);
+            
+    
+            var marker_ecdc69de057ce74b6c1c4eeccee7e918 = L.marker(
+                [15.0, -70.0],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var div_icon_fd26b0f59a3bed81b885de5b12702b72 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; \n                       border: 1px solid #ccc; font-weight: bold; color: #d35400;\"\u003e\n                Velocidade: 1670 km/h\n            \u003c/div\u003e\n            ",
+  "iconSize": [150, 40],
+  "iconAnchor": [75, 20],
+  "className": "empty",
+});
+        
+    
+                marker_ecdc69de057ce74b6c1c4eeccee7e918.setIcon(div_icon_fd26b0f59a3bed81b885de5b12702b72);
+            
+    
+            var marker_1eefef8d6b7421109024247d2d3e476b = L.marker(
+                [10.0, -80.0],
+                {
+}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var div_icon_60ac4d33188769f8e42f8dd1ab6033f7 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; \n                       border: 1px solid #ccc; font-weight: bold; color: #d35400;\"\u003e\n                \ud83c\udf0e Dire\u00e7\u00e3o Leste\n            \u003c/div\u003e\n            ",
+  "iconSize": [150, 40],
+  "iconAnchor": [75, 20],
+  "className": "empty",
+});
+        
+    
+                marker_1eefef8d6b7421109024247d2d3e476b.setIcon(div_icon_60ac4d33188769f8e42f8dd1ab6033f7);
+            
+    
+            var poly_line_94f646d78c087a897f4e7f602952c876 = L.polyline(
+                [[10.0, -85.0], [10.0, -75.0]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var poly_line_636337360dae541ae009ca1d846d0c7e = L.polyline(
+                [[10.0, -75.0], [8.0, -77.0]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+    
+            var poly_line_4bdd32c17e10287cc9c60d7b7f775544 = L.polyline(
+                [[10.0, -75.0], [12.0, -77.0]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_6079df0ab9fc0864e3e1176367d9f16d);
+        
+</script>
+</html>
